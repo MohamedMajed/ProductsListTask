@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Products
-struct Products: Codable {
+struct Product: Codable {
     let records: [Record]
 }
 
