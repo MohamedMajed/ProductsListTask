@@ -16,6 +16,7 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     var photo: UIImage?
     let activityIndicator = UIActivityIndicatorView(style: .large)
     private let productViewModel = ProductsViewModel()
+    var record: Record?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,10 +103,16 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Declare productDetailsViewModel variable
+        let productDetailsViewModel = ProductDetailsViewModel(record: productViewModel.products[indexPath.item])
+
+        // Instantiate ProductDetailsVC with productDetailsViewModel
         let productDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailsVC") as! ProductDetailsVC
+        productDetailsVC.productDetailsViewModel = productDetailsViewModel
+        
+        // Push view controller onto navigation stack
         navigationController?.pushViewController(productDetailsVC, animated: true)
     }
-    
     
     
     // MARK: UICollectionViewDelegate
