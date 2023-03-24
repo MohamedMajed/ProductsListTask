@@ -11,26 +11,71 @@ private let reuseIdentifier = "Cell"
 
 class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - Properties
+    
     var photo: UIImage?
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let productViewModel = ProductsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        startActivityIndicator()
         
         photo = UIImage(named: "Avengers")
         // self.clearsSelectionOnViewWillAppear = false
         
         // Register cell classes
         collectionView.register(UINib(nibName: "ProductCell", bundle: .main), forCellWithReuseIdentifier: "ProductCell")
+        // configureCollectionView()
+        subscribeToViewModelEvents()
         
     }
     
-    // MARK: - Configure CollectionView
+    // MARK: - Subscribe to the view model events
     
-    func configureCollectionView() {
-        collectionView.register(cellType: ProductCell.self)
+    private func subscribeToViewModelEvents() {
         
+        productViewModel.bindProductsViewModelToView = { [weak self] in
+            self?.onSuccessUpdateView()
+        }
+        
+        productViewModel.bindViewModelErrorToView = { [weak self] in
+            self?.showErrorAlert()
+        }
     }
     
+    //MARK: - Update Collection View
+    
+    // Update the collection view when the data is successfully retrieved from the API
+    private func onSuccessUpdateView() {
+        
+        collectionView.reloadData()
+        stopActivityIndicator()
+    }
+    
+    // Show an error alert if there was an error retrieving the data
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Error 404", message: productViewModel.errorMessage, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Ok", style: .default) {
+            (UIAlertAction) in
+        }
+        
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func startActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.color = UIColor.darkGray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
     
     // MARK: UICollectionViewDataSource
     
@@ -42,16 +87,23 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 12
+        return productViewModel.products.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withType: ProductCell.self, for: indexPath)
         
-        cell.configureCell(productDescription: "BlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla", productPrice: 354)
+        let product = productViewModel.products[indexPath.row]
+        
+        cell.configureCell(productDescription: product.description, productPrice: product.price, productImage: product.image.url, widthOfImg: product.image.width, heightOfImg: product.image.height)
         cell.backgroundColor = .red
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let productDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailsVC") as! ProductDetailsVC
+        navigationController?.pushViewController(productDetailsVC, animated: true)
     }
     
     
@@ -70,18 +122,18 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     //MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: self.view.frame.width * 0.493, height: self.view.frame.width * 0.45)
+        //return CGSize(width: self.view.frame.width * 0.493, height: self.view.frame.width * 0.60)
+        return CGSize(width: collectionView.frame.size.width/2.15, height: collectionView.frame.size.height/3.1)
     }
     
     func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         
-        return 1
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         
-        return 0.1
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

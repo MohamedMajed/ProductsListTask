@@ -9,13 +9,13 @@ import Foundation
 
 
 protocol ProductsService {
-    func fetchProducts(atPage: Int, completion: @escaping (Result<Product, Error>) -> Void)
+    func fetchProducts(/*atPage: Int,*/ completion: @escaping (Result<Product, Error>) -> Void)
 }
 
 class APIService: ProductsService {
     
-    func fetchProducts(atPage: Int, completion: @escaping (Result<Product, Error>) -> Void ) {
-        let URLString = "https://api.npoint.io/d847ef26e26389465c6d&page=\(atPage)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+    func fetchProducts(/*atPage: Int,*/ completion: @escaping (Result<Product, Error>) -> Void ) {
+        let URLString = "https://api.npoint.io/d847ef26e26389465c6d".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: URLString)!
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601

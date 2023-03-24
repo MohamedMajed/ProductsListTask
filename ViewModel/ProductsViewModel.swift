@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 class ProductsViewModel {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     var productService: ProductsService
     var currentPage: Int = 1
@@ -32,7 +31,7 @@ class ProductsViewModel {
     var bindProductsViewModelToView: (()->()) = {}
     var bindViewModelErrorToView: (()->()) = {}
     
-    //MARK: - Initializers
+    // MARK: - Initializers
     
     init() {
         self.productService = APIService()
@@ -43,7 +42,7 @@ class ProductsViewModel {
         self.productService = productService
     }
     
-    //MARK: - Methods
+    // MARK: - Methods
     
     func prefetchRows(at indexPaths: [IndexPath]) {
         for index in indexPaths {
@@ -58,21 +57,21 @@ class ProductsViewModel {
     
     func fetchProductsFromAPI() {
         
-        isFetchingProducts = true
-        productService.fetchProducts(atPage: currentPage) { [weak self] (result: Result<Product, Error>) in
+       // isFetchingProducts = true
+        productService.fetchProducts(/*atPage: currentPage*/) { [weak self] (result: Result<Product, Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let products):
-                if self.currentPage <= 10 {
+              // if self.currentPage <= 10 {
                     self.products.append(contentsOf: products.records)
-                    self.currentPage += 1
-                }
+               //     self.currentPage += 1
+              //  }
             case .failure(let error):
                 let message = error.localizedDescription
                 self.errorMessage = message
                 print(error.localizedDescription)
             }
-            self.isFetchingProducts = false
+    //        self.isFetchingProducts = false
         }
     }
 }

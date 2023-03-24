@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w6S-Ua-3bc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qu9-7v-l17">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Products CollectionVC-->
+        <!--Products List-->
         <scene sceneID="879-Ht-iJs">
             <objects>
                 <collectionViewController id="w6S-Ua-3bc" customClass="ProductsCollectionVC" customModule="ProductsListTask" customModuleProvider="target" sceneMemberID="viewController">
@@ -28,25 +28,61 @@
                             <outlet property="delegate" destination="w6S-Ua-3bc" id="Aj5-VN-E07"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Products List" id="dpo-6o-vZ8"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhe-KS-zml" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-72" y="72"/>
+            <point key="canvasLocation" x="837.68115942028987" y="71.651785714285708"/>
         </scene>
-        <!--View Controller-->
+        <!--Product DetailsVC-->
         <scene sceneID="dnl-qf-yaL">
             <objects>
-                <viewController id="lcP-wh-uhO" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductDetailsVC" id="lcP-wh-uhO" customClass="ProductDetailsVC" customModule="ProductsListTask" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IRc-Ev-clM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGa-d2-yIR">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="595"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohd-4m-1T2">
+                                <rect key="frame" x="0.0" y="603" width="414" height="293"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="qHb-S4-BhP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="productDescription" destination="ohd-4m-1T2" id="1XB-Ok-Znt"/>
+                        <outlet property="productImage" destination="JGa-d2-yIR" id="mV1-OC-Kpa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMO-SV-nAy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="592" y="77"/>
+            <point key="canvasLocation" x="1501.449275362319" y="76.339285714285708"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Tvn-fG-dpb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qu9-7v-l17" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ING-lQ-h6z">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="w6S-Ua-3bc" kind="relationship" relationship="rootViewController" id="5Gh-6c-E1Z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RlM-Kb-axb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="93" y="72"/>
         </scene>
     </scenes>
     <resources>

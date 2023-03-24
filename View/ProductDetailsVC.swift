@@ -9,6 +9,10 @@ import UIKit
 
 class ProductDetailsVC: UIViewController {
 
+    // MARK: - IBOutlets
+    @IBOutlet weak var productImage: UIImageView!
+    @IBOutlet weak var productDescription: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

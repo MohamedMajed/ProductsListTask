@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProductCell: UICollectionViewCell {
 
@@ -19,9 +20,11 @@ class ProductCell: UICollectionViewCell {
     
     //MARK: - Configure Collection View cell
     
-    func configureCell(productDescription: String, productPrice: Int) {
+    func configureCell(productDescription: String, productPrice: Int, productImage: String, widthOfImg: Int, heightOfImg: Int) {
         descriptionLebel.text = productDescription
         priceLabel.text = "\(productPrice) EGP"
+        let url = URL(string: productImage)
+        productImg.kf.setImage(with: url)
     }
 
 }
