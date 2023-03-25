@@ -16,6 +16,7 @@ class ProductCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        updateCell()
     }
     
     //MARK: - Configure Collection View cell
@@ -26,6 +27,11 @@ class ProductCell: UICollectionViewCell {
         let url = URL(string: productImage)
         productImg.kf.setImage(with: url)
     }
-
+    
+    func updateCell() {
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 7
+        self.layer.borderColor = UIColor.black.cgColor
+    }
 }
  

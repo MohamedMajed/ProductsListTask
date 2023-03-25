@@ -9,6 +9,5 @@ import Foundation
 
 
 enum APIError: Error {
-
     case dataNotFound
 }

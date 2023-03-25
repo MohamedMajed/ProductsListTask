@@ -9,11 +9,10 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ProductsCollectionVC: UICollectionViewController {
     
     // MARK: - Properties
     
-    var photo: UIImage?
     let activityIndicator = UIActivityIndicatorView(style: .large)
     private let productViewModel = ProductsViewModel()
     var record: Record?
@@ -22,15 +21,20 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
         super.viewDidLoad()
         
         startActivityIndicator()
-        
-        photo = UIImage(named: "Avengers")
         // self.clearsSelectionOnViewWillAppear = false
-        
-        // Register cell classes
-        collectionView.register(UINib(nibName: "ProductCell", bundle: .main), forCellWithReuseIdentifier: "ProductCell")
+        configureCollectionView()
+        collectionView.isPrefetchingEnabled = true
         // configureCollectionView()
         subscribeToViewModelEvents()
+    }
+    
+    // MARK: - Configure Collection View
+    
+    func configureCollectionView() {
         
+        collectionView.prefetchDataSource = self
+        // Register cell classes
+        collectionView.register(UINib(nibName: "ProductCell", bundle: .main), forCellWithReuseIdentifier: "ProductCell")
     }
     
     // MARK: - Subscribe to the view model events
@@ -64,7 +68,7 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
         }
         
         alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+        //self.present(alert, animated: true, completion: nil)
     }
     
     func startActivityIndicator() {
@@ -99,13 +103,14 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
         cell.configureCell(productDescription: product.description, productPrice: product.price, productImage: product.image.url, widthOfImg: product.image.width, heightOfImg: product.image.height)
         cell.backgroundColor = .red
         
+        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Declare productDetailsViewModel variable
         let productDetailsViewModel = ProductDetailsViewModel(record: productViewModel.products[indexPath.item])
-
+        
         // Instantiate ProductDetailsVC with productDetailsViewModel
         let productDetailsVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailsVC") as! ProductDetailsVC
         productDetailsVC.productDetailsViewModel = productDetailsViewModel
@@ -117,36 +122,50 @@ class ProductsCollectionVC: UICollectionViewController, UICollectionViewDelegate
     
     // MARK: UICollectionViewDelegate
     
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.contentView.alpha = 0.0
-        cell.layer.transform = CATransform3DMakeScale(0.25, 0.25, 0.25)
-        UIView.animate(withDuration: 0.25) {
-            cell.contentView.alpha = 1
-            cell.layer.transform = CATransform3DScale(CATransform3DIdentity, 1, 1, 1)
-        }
-    }
+//    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        cell.contentView.alpha = 0.0
+//        cell.layer.transform = CATransform3DMakeScale(0.25, 0.25, 0.25)
+//        UIView.animate(withDuration: 0.25) {
+//            cell.contentView.alpha = 1
+//            cell.layer.transform = CATransform3DScale(CATransform3DIdentity, 1, 1, 1)
+//        }
+//    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ProductsCollectionVC: UICollectionViewDelegateFlowLayout {
     
-    //MARK: - UICollectionViewDelegateFlowLayout
-    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+////        return CGSize(width: self.view.frame.width * 0.493, height: self.view.frame.width * 0.80)
+//        let size = (collectionView.frame.size.width-20)/2
+////        return CGSize(width: collectionView.frame.size.width/2.15, height: collectionView.frame.size.height/3.1)
+//        return CGSize(width: size, height: size * 1.35)
+//    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //return CGSize(width: self.view.frame.width * 0.493, height: self.view.frame.width * 0.60)
-        return CGSize(width: collectionView.frame.size.width/2.15, height: collectionView.frame.size.height/3.1)
+        let itemWidth = (collectionView.bounds.width - 15) / 2
+        let itemHeight = itemWidth * 1.35
+        return CGSize(width: itemWidth, height: itemHeight)
     }
-    
-    func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
-    
-    func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
-        return 10
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
-    
-    func collectionView(_ collectionView: UICollectionView , layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        return UIEdgeInsets(top: 1, left: 2, bottom: 1, right: 2)
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
     }
+}
+
+// MARK: UICollectionViewDataSource
+
+extension ProductsCollectionVC: UICollectionViewDataSourcePrefetching {
     
-    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        productViewModel.prefetchItems(at: indexPaths)
+    }
 }
