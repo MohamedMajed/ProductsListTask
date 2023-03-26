@@ -22,10 +22,7 @@ class ProductsCollectionVC: UICollectionViewController {
         super.viewDidLoad()
         
         startActivityIndicator()
-        // self.clearsSelectionOnViewWillAppear = false
         configureCollectionView()
-        collectionView.isPrefetchingEnabled = true
-        // configureCollectionView()
         subscribeToViewModelEvents()
     }
     
@@ -34,6 +31,8 @@ class ProductsCollectionVC: UICollectionViewController {
     func configureCollectionView() {
         
         collectionView.prefetchDataSource = self
+        collectionView.isPrefetchingEnabled = true
+        
         // Register cell classes
         collectionView.register(UINib(nibName: "ProductCell", bundle: .main), forCellWithReuseIdentifier: "ProductCell")
         
@@ -99,6 +98,7 @@ class ProductsCollectionVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withType: ProductCell.self, for: indexPath)
         
         let product = productsListViewModel.products[indexPath.row]
@@ -111,6 +111,7 @@ class ProductsCollectionVC: UICollectionViewController {
     // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         // Declare productDetailsViewModel variable
         let productDetailsViewModel = ProductDetailsViewModel(record: productsListViewModel.products[indexPath.item])
         
@@ -132,15 +133,15 @@ extension ProductsCollectionVC: UICollectionViewDelegateFlowLayout {
         let itemHeight = itemWidth * 1.35
         return CGSize(width: itemWidth, height: itemHeight)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
     }

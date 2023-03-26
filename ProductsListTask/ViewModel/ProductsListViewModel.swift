@@ -39,7 +39,6 @@ class ProductsListViewModel {
     
     init() {
         self.productService = APIService()
-        //self.fetchProductsFromAPI()
         setupReachabilityObserver()
     }
     
