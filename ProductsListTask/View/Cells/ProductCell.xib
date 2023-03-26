@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProductCell" id="gTV-IL-0wX" customClass="ProductCell" customModule="ProductsListTask" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="220" height="250"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="220" height="250"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FrV-hP-eOV">
+                        <rect key="frame" x="0.0" y="0.0" width="220" height="250"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" image="Avengers" translatesAutoresizingMaskIntoConstraints="NO" id="yUA-xb-UgB">
+                                <rect key="frame" x="0.0" y="0.0" width="220" height="145.5"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Price" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQQ-Ha-SHj">
+                                <rect key="frame" x="0.0" y="145.5" width="220" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQK-DI-oUS">
+                                <rect key="frame" x="0.0" y="166" width="220" height="84"/>
+                                <string key="text">LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="FrV-hP-eOV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="33c-gU-fAx"/>
+                <constraint firstAttribute="bottom" secondItem="FrV-hP-eOV" secondAttribute="bottom" id="Lzt-mL-4iO"/>
+                <constraint firstItem="FrV-hP-eOV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="WF2-WZ-zSz"/>
+                <constraint firstAttribute="trailing" secondItem="FrV-hP-eOV" secondAttribute="trailing" id="sb1-sD-p4B"/>
+            </constraints>
+            <size key="customSize" width="295" height="257"/>
+            <connections>
+                <outlet property="descriptionLebel" destination="QQK-DI-oUS" id="3IE-hE-lkg"/>
+                <outlet property="priceLabel" destination="FQQ-Ha-SHj" id="oZc-kA-PFo"/>
+                <outlet property="productImg" destination="yUA-xb-UgB" id="42f-Xf-Wud"/>
+            </connections>
+            <point key="canvasLocation" x="173.91304347826087" y="87.053571428571431"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Avengers" width="540" height="810"/>
+    </resources>
+</document>
